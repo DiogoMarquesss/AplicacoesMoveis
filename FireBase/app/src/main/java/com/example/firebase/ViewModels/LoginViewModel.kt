@@ -1,11 +1,8 @@
-package com.example.firebase
+package com.example.firebase.ViewModels
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
-import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
