@@ -49,6 +49,19 @@ fun HomeView(
                         navController.navigate("login")
                     }
                 ){}
+                Button(
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .align(Alignment.CenterEnd)
+                        .border(
+                            5.dp,
+                            Color.Black,
+                            shape = CircleShape,
+                        ),
+                    onClick = {
+                        navController.navigate("addItem")
+                    }
+                ){}
             }
 
         }

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.firebase.Views.AddItemsView
 import com.example.firebase.Views.HomeView
 import com.example.firebase.Views.LoginView
 import com.example.firebase.Views.UserProfileView
@@ -44,6 +45,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable ("home"){
                             HomeView(
+                                modifier = Modifier.padding(innerPadding),
+                                navController = navController
+                            )
+                        }
+                        composable ("addItem"){
+                            AddItemsView(
                                 modifier = Modifier.padding(innerPadding),
                                 navController = navController
                             )

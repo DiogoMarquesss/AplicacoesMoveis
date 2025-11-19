@@ -29,6 +29,7 @@ class LoginViewModel: ViewModel(){
     fun updatePassword(password : String) {
         uiState.value = uiState.value.copy(password = password)
     }
+
     fun createUser(){
 
         uiState.value = uiState.value.copy(isLoading = true)
