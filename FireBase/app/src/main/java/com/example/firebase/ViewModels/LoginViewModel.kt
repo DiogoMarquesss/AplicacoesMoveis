@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.firestore
 
 data class LoginState (
     var email : String? = null,
@@ -14,10 +15,10 @@ data class LoginState (
     var error : String? = null,
     var isLoading : Boolean = false
 )
-
 class LoginViewModel: ViewModel(){
 
     private val auth : FirebaseAuth = Firebase.auth
+
 
     val uiState = mutableStateOf(LoginState())
 
@@ -41,6 +42,7 @@ class LoginViewModel: ViewModel(){
             if(task.isSuccessful){
                 Log.d(TAG, "signInWithEmail:success")
                 val user = auth.currentUser
+
             }else{
                 Log.w(TAG, "signInWithEmail:failure", task.exception)
                 uiState.value = uiState.value.copy(
@@ -49,7 +51,6 @@ class LoginViewModel: ViewModel(){
             }
         }
     }
-
     fun login(){
         uiState.value = uiState.value.copy(isLoading = true)
         auth.signInWithEmailAndPassword(
@@ -69,4 +70,5 @@ class LoginViewModel: ViewModel(){
                 }
             }
     }
+
 }

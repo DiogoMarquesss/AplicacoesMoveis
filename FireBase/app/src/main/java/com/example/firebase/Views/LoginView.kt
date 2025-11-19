@@ -68,6 +68,7 @@ fun LoginView(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
                     viewModel.createUser()
+                    navController.navigate("userInfo")
                 }
             ){
                 Text("Criar")
