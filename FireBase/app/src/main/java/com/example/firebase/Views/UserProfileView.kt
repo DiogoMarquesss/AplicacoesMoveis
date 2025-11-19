@@ -18,9 +18,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.firebase.ViewModels.LoginViewModel
 import com.example.firebase.ViewModels.UserProfileViewModel
 import com.example.firebase.ui.theme.FireBaseTheme
 import com.example.firebase.ui.theme.LightGrey
+import kotlin.math.log
 
 
 @Composable
@@ -31,12 +33,11 @@ fun UserProfileView(
 
 
     val viewModel: UserProfileViewModel = viewModel()
-
     val uiState = viewModel.uiState.value
 
-    LaunchedEffect(Unit) {
-        viewModel.GetInfoUser()
-    }
+    val loginViewModel : LoginViewModel = viewModel()
+    val loginUiState = loginViewModel.uiState.value
+
     Column(
         modifier= Modifier.fillMaxSize(),
     ) {
@@ -49,7 +50,7 @@ fun UserProfileView(
         ){
             Row() {
                 Text("Nome: ${uiState.name ?: ""}")
-                Text("Email: ${uiState.email ?: ""}")
+                Text("Email: ${loginUiState.email ?: ""}")
             }
 
 

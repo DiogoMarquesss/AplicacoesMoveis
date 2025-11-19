@@ -10,11 +10,13 @@ import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 
 data class LoginState (
+    var id : String? = null,
     var email : String? = null,
     var password : String? = null,
     var error : String? = null,
     var isLoading : Boolean = false
 )
+
 class LoginViewModel: ViewModel(){
 
     private val auth : FirebaseAuth = Firebase.auth
@@ -31,26 +33,7 @@ class LoginViewModel: ViewModel(){
         uiState.value = uiState.value.copy(password = password)
     }
 
-    fun createUser(){
 
-        uiState.value = uiState.value.copy(isLoading = true)
-
-        auth.createUserWithEmailAndPassword(
-            uiState.value.email ?: "",
-            uiState.value.password ?: "",
-        ).addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                Log.d(TAG, "signInWithEmail:success")
-                val user = auth.currentUser
-
-            }else{
-                Log.w(TAG, "signInWithEmail:failure", task.exception)
-                uiState.value = uiState.value.copy(
-                    isLoading = false,
-                    error = "Wrong password or no internet connection")
-            }
-        }
-    }
     fun login(){
         uiState.value = uiState.value.copy(isLoading = true)
         auth.signInWithEmailAndPassword(

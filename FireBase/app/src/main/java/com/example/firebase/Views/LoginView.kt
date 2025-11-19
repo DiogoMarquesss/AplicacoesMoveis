@@ -21,6 +21,7 @@ import com.example.firebase.ViewModels.LoginViewModel
 import com.example.firebase.ui.theme.FireBaseTheme
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavController
+import com.example.firebase.ViewModels.CreateUserViewModel
 
 
 @Composable
@@ -31,6 +32,9 @@ fun LoginView(
 ){
     val viewModel : LoginViewModel = viewModel()
     val uiState by viewModel.uiState
+
+    val userViewModel : CreateUserViewModel = viewModel()
+    val _uiState by userViewModel.uiState
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -67,24 +71,35 @@ fun LoginView(
             Button(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
-                    viewModel.createUser()
-                    navController.navigate("userInfo")
+                    if (!userViewModel.isDataComplete()) {
+                        navController.navigate("createProfile")
+                    } else {
+                        userViewModel.createUser { success ->
+                            if (success) {
+                                navController.navigate("userInfo")
+                            }
+                        }
+                    }
                 }
-            ){
+            ) {
                 Text("Criar")
             }
+
 
             Button(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
                     viewModel.login()
+
                     navController.navigate("profile")
 
                 }
             ){
                 Text("Login")
             }
+
         }
+
     }
 }
 
