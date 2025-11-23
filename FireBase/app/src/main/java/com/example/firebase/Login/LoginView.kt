@@ -1,4 +1,4 @@
-package com.example.firebase.Views
+package com.example.firebase.Login
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,19 +9,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.firebase.ViewModels.LoginViewModel
-import com.example.firebase.ui.theme.FireBaseTheme
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavController
-import com.example.firebase.ViewModels.CreateUserViewModel
+import com.example.firebase.User.CreateUserViewModel
 
 
 @Composable
@@ -32,6 +28,7 @@ fun LoginView(
 ){
     val viewModel : LoginViewModel = viewModel()
     val uiState by viewModel.uiState
+
 
     val userViewModel : CreateUserViewModel = viewModel()
     val _uiState by userViewModel.uiState
@@ -58,7 +55,6 @@ fun LoginView(
             }
         )
 
-
         if (uiState.error != null) {
             Text(
                 text = uiState.error ?: "",
@@ -74,7 +70,7 @@ fun LoginView(
                     if (!userViewModel.isDataComplete()) {
                         navController.navigate("createProfile")
                     } else {
-                        userViewModel.createUser { success ->
+                        userViewModel.createUser { success, uid ->
                             if (success) {
                                 navController.navigate("userInfo")
                             }
@@ -90,8 +86,7 @@ fun LoginView(
                 modifier = Modifier.padding(8.dp),
                 onClick = {
                     viewModel.login()
-
-                    navController.navigate("profile")
+                    navController.navigate("home")
 
                 }
             ){
