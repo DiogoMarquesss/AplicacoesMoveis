@@ -18,8 +18,17 @@ import com.example.firebase.Home.HomeView
 import com.example.firebase.Login.LoginView
 import com.example.firebase.User.UserProfileView
 import com.example.firebase.ui.theme.FireBaseTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var auth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
