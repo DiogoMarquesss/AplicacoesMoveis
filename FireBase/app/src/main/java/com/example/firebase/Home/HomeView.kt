@@ -16,7 +16,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -31,12 +30,18 @@ fun HomeView(
     navController: NavController = rememberNavController()
 ) {
 
-    val viewModel: ItemsViewModel = hiltViewModel()
+
+    val viewModel: ItemsViewModel = viewModel()
     val uiState by viewModel.uiState
 
-
     LaunchedEffect(Unit) {
-        viewModel.fetchItems()
+        viewModel.getItemsFromDb()
+    }
+
+    LaunchedEffect(uiState.items) {
+        if (uiState.items.isNotEmpty()) {
+            viewModel.listToItem(uiState.items)
+        }
     }
 
     Column(

@@ -14,8 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavController
@@ -28,7 +26,7 @@ fun LoginView(
     navController : NavController = rememberNavController(),
     modifier: Modifier = Modifier,
 ){
-    val viewModel : LoginViewModel = hiltViewModel()
+    val viewModel : LoginViewModel = viewModel()
     val uiState by viewModel.uiState
 
 
