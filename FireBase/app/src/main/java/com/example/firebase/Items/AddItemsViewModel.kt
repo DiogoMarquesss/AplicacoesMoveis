@@ -1,16 +1,13 @@
-package com.example.firebase.ViewModels
+package com.example.firebase.Items
 
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.mutableStateSetOf
 import androidx.lifecycle.ViewModel
+import com.example.firebase.Models.Item
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
-data class Item(
-    var name : String? = null
-)
 class AddItemsViewModel : ViewModel() {
 
     val uiState = mutableStateOf(Item())
@@ -20,10 +17,14 @@ class AddItemsViewModel : ViewModel() {
     fun updateItemName(name: String){
         uiState.value = uiState.value.copy(name = name)
     }
-
+    fun updateItemPrice(price: String){
+        uiState.value = uiState.value.copy(price = price)
+    }
+    fun updateItemId(itemId: String){
+        uiState.value = uiState.value.copy(id = itemId)
+    }
     fun addItems() {
         val item = uiState.value
-
         db.collection("Items")
             .document("Pecas")
             .collection("listaPecas")

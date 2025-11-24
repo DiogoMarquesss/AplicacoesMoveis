@@ -1,4 +1,4 @@
-package com.example.firebase.Views
+package com.example.firebase.Items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,8 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.firebase.ViewModels.AddItemsViewModel
-import com.example.firebase.ViewModels.LoginViewModel
 
 @Composable
 fun AddItemsView(
@@ -37,6 +35,14 @@ fun AddItemsView(
                     modifier = Modifier.padding(8.dp),
                     onValueChange = { newValue ->
                         viewModel.updateItemName(newValue)
+                    }
+                )
+                TextField(
+                    value = uiState.price ?: "",
+                    label = { Text("Price") },
+                    modifier = Modifier.padding(8.dp),
+                    onValueChange = { newValue ->
+                        viewModel.updateItemPrice(newValue)
                     }
                 )
             }
