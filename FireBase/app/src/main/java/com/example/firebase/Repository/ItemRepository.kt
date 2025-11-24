@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
@@ -49,13 +50,24 @@ class ItemRepository @Inject constructor(
         }
     }.flowOn(Dispatchers.IO)
 
-    fun removeItem(itemId: String){
-        db.collection("Items").document("Pecas").collection("listaPecas")
-            .document(itemId)
-            .delete()
-            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }
-    }
+    fun removeItem(itemId: String): Flow<ResultWrapper<Unit>> = flow {
+        emit(ResultWrapper.Loading())
+
+        try {
+            db.collection("Items")
+                .document("Pecas")
+                .collection("listaPecas")
+                .document(itemId)
+                .delete()
+                .await()
+
+            emit(ResultWrapper.Success(Unit))
+        } catch (e: Exception) {
+            emit(ResultWrapper.Error(e.localizedMessage ?: "Erro ao remover item"))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
 
 }
 
