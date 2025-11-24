@@ -1,13 +1,9 @@
-package com.example.firebase.User
+package com.example.firebase.ViewModels
 
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.firebase.Cart.CartViewModel
-import com.example.firebase.Login.LoginState
-import com.example.firebase.User.Model.UserInfoModel
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -24,10 +20,7 @@ class CreateUserViewModel : ViewModel() {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     var uiState = mutableStateOf(UserInfo())
-    var userModel = mutableStateOf(UserInfoModel())
     var loginState = mutableStateOf(LoginState())
-
-
 
     fun updateName(name: String) {
         uiState.value = uiState.value.copy(name = name)
@@ -45,11 +38,11 @@ class CreateUserViewModel : ViewModel() {
         loginState.value = loginState.value.copy(password = password)
     }
 
-    fun createUser(onResult: (Boolean, String?) -> Unit) {
+    fun createUser(onResult: (Boolean) -> Unit) {
         Log.d("Teste_Botao", "Teste create")
 
         if (!isDataComplete()) {
-            onResult(false, "")
+            onResult(false)
             return
         }
 
@@ -58,16 +51,15 @@ class CreateUserViewModel : ViewModel() {
             loginState.value.password ?: "",
         ).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val uid = auth.currentUser?.uid
                 Log.d(TAG, "signInWithEmail:success")
-                onResult(true, uid)
+                onResult(true)
             } else {
                 Log.w(TAG, "signInWithEmail:failure", task.exception)
                 loginState.value = loginState.value.copy(
                     isLoading = false,
                     error = "Wrong password or no internet connection"
                 )
-                onResult(false, "")
+                onResult(false)
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.example.firebase.User
+package com.example.firebase.Views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,15 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.firebase.Cart.CartViewModel
+import com.example.firebase.ViewModels.CreateUserViewModel
+import com.example.firebase.ViewModels.LoginViewModel
 import com.example.firebase.ui.theme.FireBaseTheme
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 
 @Composable
 fun CreateProfileView(
@@ -31,9 +28,6 @@ fun CreateProfileView(
     val viewModel: CreateUserViewModel = viewModel()
     val uiState by viewModel.uiState
     val loginState by viewModel.loginState
-
-    val cartModel: CartViewModel = viewModel()
-    val cartState by cartModel.uiState
 
     Column(
         modifier = Modifier
@@ -78,10 +72,9 @@ fun CreateProfileView(
         Button(
             modifier = Modifier.padding(8.dp),
             onClick = {
-                viewModel.createUser { success, uid ->
+                viewModel.createUser { success ->
                     if (success) {
                         viewModel.AddUserInfo()
-                        cartModel.createCart(uid)
                         navController.navigate("Home")
                     }
                 }

@@ -1,4 +1,4 @@
-package com.example.firebase.User
+package com.example.firebase.Views
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.firebase.ViewModels.CreateUserViewModel
 import com.example.firebase.ui.theme.FireBaseTheme
 
 @Composable
@@ -48,7 +51,7 @@ fun CreateUserView(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewCreateUserView(){
     FireBaseTheme() {
