@@ -25,24 +25,15 @@ class AddItemsViewModel : ViewModel() {
     }
     fun addItems() {
         val item = uiState.value
-
         db.collection("Items")
             .document("Pecas")
             .collection("listaPecas")
             .add(item)
             .addOnSuccessListener { docRef ->
-                val id = docRef.id
-
-                docRef.update("id", id)
-
-                uiState.value = uiState.value.copy(id = id)
-
-                Log.d(TAG, "Peça adicionada com id=$id")
+                Log.d(TAG, "Peça adicionada com id=${docRef.id}")
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Erro ao adicionar peça", e)
             }
     }
-
-
 }

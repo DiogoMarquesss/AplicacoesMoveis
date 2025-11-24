@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -24,16 +23,19 @@ import com.example.firebase.Cart.cartView
 import com.example.firebase.R
 import com.example.firebase.Login.AuthSession
 import com.example.firebase.Login.LoginViewModel
-import com.example.firebase.Repository.LoginRepository
 
 @Composable
 fun NavBarView(
     modifier: Modifier = Modifier,
-    navController: NavController = rememberNavController(),
+    navController: NavController = rememberNavController()
 ){
 
-    val viewModel : NavBarVieWModel = hiltViewModel()
-    var user = viewModel.getUser()
+
+    val viewModel: LoginViewModel = viewModel()
+    val uiState by viewModel.uiState
+
+    val isLogged by AuthSession.isLogged
+
     Row(
         Modifier.fillMaxWidth()
             .background(Color.Gray)
@@ -49,7 +51,7 @@ fun NavBarView(
             Text("Home")
         }
 
-        if(user != null){
+        if(isLogged){
 
             Button(
                 onClick = {
@@ -71,7 +73,7 @@ fun NavBarView(
             }
             Button(
                 onClick = {
-                    viewModel.logOut()
+
                     navController.navigate("home")
                 }
             ) {
