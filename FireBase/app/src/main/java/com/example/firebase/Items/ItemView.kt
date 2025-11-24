@@ -61,7 +61,7 @@ fun itemView(
         }
         Button(
             onClick = {
-                itemModel.removeItem(item.id)
+
             }
         ) {
             Text("Remove")

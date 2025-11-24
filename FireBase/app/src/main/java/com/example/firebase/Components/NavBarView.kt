@@ -73,7 +73,7 @@ fun NavBarView(
             }
             Button(
                 onClick = {
-                    viewModel.logOut()
+
                     navController.navigate("home")
                 }
             ) {
